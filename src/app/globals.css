@@ -230,3 +230,70 @@
     text-decoration: none;
   }
 }
+
+/* =========================================
+   BookNook Homepage Slider
+========================================= */
+
+.booknook-hero-swiper {
+  padding-bottom: 45px !important;
+}
+
+/* Slider pagination container */
+.booknook-hero-swiper .swiper-pagination {
+  bottom: 5px !important;
+}
+
+/* Pagination dots */
+.booknook-hero-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #254c3b;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+/* Active pagination dot */
+.booknook-hero-swiper .swiper-pagination-bullet-active {
+  width: 25px;
+  border-radius: 10px;
+  opacity: 1;
+}
+
+/* Previous and next buttons */
+.booknook-hero-swiper .swiper-button-prev,
+.booknook-hero-swiper .swiper-button-next {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e9e5db;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #254c3b;
+  transition: all 0.2s ease;
+}
+
+/* Smaller navigation icons */
+.booknook-hero-swiper .swiper-button-prev::after,
+.booknook-hero-swiper .swiper-button-next::after {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.booknook-hero-swiper .swiper-button-prev:hover,
+.booknook-hero-swiper .swiper-button-next:hover {
+  background: #254c3b;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .booknook-hero-swiper .swiper-button-prev,
+  .booknook-hero-swiper .swiper-button-next {
+    width: 34px;
+    height: 34px;
+  }
+
+  .booknook-hero-swiper .swiper-button-prev::after,
+  .booknook-hero-swiper .swiper-button-next::after {
+    font-size: 11px;
+  }
+}

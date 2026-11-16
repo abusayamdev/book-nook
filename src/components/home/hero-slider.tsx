@@ -2,244 +2,291 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen } from "lucide-react";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, EffectFade } from "swiper/modules";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
+import { ArrowRight, BookOpen, Sparkles, Library } from "lucide-react";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/effect-fade";
+import "swiper/css/navigation";
 
+// Homepage banner content
 const slides = [
   {
-    id: 1,
-    eyebrow: "YOUR NEXT CHAPTER STARTS HERE",
-    title: "Discover Stories That Stay With You.",
+    eyebrow: "WELCOME TO BOOKNOOK",
+    title: "Every book opens a new world.",
     description:
-      "Explore a thoughtfully curated collection of books, discover new authors, and find your next favorite read.",
+      "Explore inspiring stories, discover new knowledge, and find the books that make every reading moment special.",
     buttonText: "Explore Books",
-    buttonLink: "/books",
+    href: "/books",
     number: "01",
-    coverTitle: "The Art of Reading",
+    icon: BookOpen,
+    background: "bg-[#F1EEE5]",
   },
   {
-    id: 2,
-    eyebrow: "A WORLD OF KNOWLEDGE",
-    title: "Read More. Learn More. Grow More.",
+    eyebrow: "DISCOVER YOUR NEXT READ",
+    title: "Find stories worth remembering.",
     description:
-      "From timeless classics to modern discoveries, find books that inspire curiosity and lifelong learning.",
-    buttonText: "Browse Collection",
-    buttonLink: "/books",
+      "From timeless classics to modern discoveries, explore a collection made for curious minds and passionate readers.",
+    buttonText: "Discover Collection",
+    href: "/books",
     number: "02",
-    coverTitle: "Knowledge Is Power",
+    icon: Sparkles,
+    background: "bg-[#E9EFE9]",
   },
   {
-    id: 3,
-    eyebrow: "BUILT FOR EVERY READER",
-    title: "Your Personal Library, Everywhere.",
+    eyebrow: "YOUR READING JOURNEY",
+    title: "A little space for big ideas.",
     description:
-      "Build your reading collection, save your favorites, and enjoy a better way to organize your reading journey.",
-    buttonText: "Get Started",
-    buttonLink: "/register",
+      "Build your reading habit, explore different categories, and make every chapter part of your journey.",
+    buttonText: "Join BookNook",
+    href: "/register",
     number: "03",
-    coverTitle: "Your Reading Journey",
+    icon: Library,
+    background: "bg-[#F2EADF]",
   },
 ];
 
 export default function HeroSlider() {
-  const [isMounted, setIsMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   // Initialize Swiper only after the component mounts in the browser.
   useEffect(() => {
-    setIsMounted(true);
+    setMounted(true);
   }, []);
-
-  // Render a stable hero section during server prerendering.
-  if (!isMounted) {
-    const slide = slides[0];
-
-    return (
-      <section className="overflow-hidden bg-[#FAF8F3]">
-        <div className="mx-auto grid min-h-[620px] max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 lg:px-10">
-          <div className="max-w-xl">
-            <div className="mb-6 flex items-center gap-3 text-xs font-bold tracking-[0.2em] text-[#C69A56]">
-              <span className="h-px w-8 bg-[#C69A56]" />
-              {slide.eyebrow}
-            </div>
-
-            <h1 className="font-heading text-4xl leading-[1.15] font-bold tracking-tight text-[#20291F] sm:text-5xl md:text-6xl">
-              {slide.title}
-            </h1>
-
-            <p className="mt-7 max-w-lg text-base leading-8 text-[#77796F] md:text-lg">
-              {slide.description}
-            </p>
-
-            <div className="mt-9 flex flex-wrap items-center gap-5">
-              <Link
-                href={slide.buttonLink}
-                className="inline-flex items-center gap-3 rounded-md bg-[#254C3B] px-6 py-4 text-sm font-semibold text-white"
-              >
-                {slide.buttonText}
-                <ArrowRight size={18} />
-              </Link>
-
-              <Link
-                href="/about"
-                className="text-sm font-semibold text-[#254C3B]"
-              >
-                Learn More
-              </Link>
-            </div>
-          </div>
-
-          <div className="relative flex min-h-[380px] items-center justify-center">
-            <div className="absolute h-72 w-72 rounded-full bg-[#E9EEE8] sm:h-80 sm:w-80 md:h-96 md:w-96" />
-
-            <div className="relative flex h-[340px] w-[245px] -rotate-6 flex-col justify-between rounded-r-xl border-l-[9px] border-[#193A2C] bg-[#254C3B] p-7 text-white shadow-2xl sm:h-[380px] sm:w-[270px]">
-              <div>
-                <BookOpen size={32} className="text-[#D8B77C]" />
-
-                <h2 className="mt-12 font-heading text-3xl leading-tight font-bold sm:text-4xl">
-                  {slide.coverTitle}
-                </h2>
-
-                <p className="mt-5 text-xs tracking-[0.25em] text-[#D8B77C]">
-                  BOOKNOOK EDITION
-                </p>
-              </div>
-
-              <span className="text-xs tracking-widest text-white/70">
-                DISCOVER · READ · GROW
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="relative overflow-hidden bg-[#FAF8F3]">
-      <Swiper
-        modules={[Autoplay, Pagination, EffectFade]}
-        effect="fade"
-        fadeEffect={{ crossFade: true }}
-        loop
-        speed={900}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        pagination={{
-          clickable: true,
-          bulletClass:
-            "swiper-pagination-bullet !h-[9px] !w-[9px] !bg-[#254C3B] !opacity-30 !transition-all",
-          bulletActiveClass:
-            "swiper-pagination-bullet-active !w-[26px] !rounded-full !opacity-100",
-        }}
-        className="
-          booknook-hero-swiper
-          [&_.swiper-pagination]:!bottom-7
-          [&_.swiper-pagination-bullet]:!mx-1
-        "
-      >
-        {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div className="mx-auto grid min-h-[620px] max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 lg:px-10">
-              {/* Hero Content */}
-              <div className="max-w-xl">
-                <div className="mb-6 flex items-center gap-3 text-xs font-bold tracking-[0.2em] text-[#C69A56]">
-                  <span className="h-px w-8 bg-[#C69A56]" />
-                  {slide.eyebrow}
-                </div>
-
-                <h1 className="font-heading text-4xl leading-[1.15] font-bold tracking-tight text-[#20291F] sm:text-5xl md:text-6xl">
-                  {slide.title}
-                </h1>
-
-                <p className="mt-7 max-w-lg text-base leading-8 text-[#77796F] md:text-lg">
-                  {slide.description}
-                </p>
-
-                <div className="mt-9 flex flex-wrap items-center gap-5">
-                  <Link
-                    href={slide.buttonLink}
-                    className="inline-flex items-center gap-3 rounded-md bg-[#254C3B] px-6 py-4 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#193A2C] hover:shadow-lg"
-                  >
-                    {slide.buttonText}
-                    <ArrowRight size={18} />
-                  </Link>
-
-                  <Link
-                    href="/about"
-                    className="text-sm font-semibold text-[#254C3B] transition-colors hover:text-[#C69A56]"
-                  >
-                    Learn More
-                  </Link>
-                </div>
-
-                <div className="mt-12 flex items-center gap-4">
-                  <span className="font-heading text-2xl font-bold text-[#254C3B]">
-                    {slide.number}
-                  </span>
-
-                  <span className="h-px w-16 bg-[#E9E5DB]" />
-
-                  <span className="text-xs tracking-widest text-[#77796F]">
-                    BOOKNOOK COLLECTION
-                  </span>
-                </div>
+      {!mounted ? (
+        // Static placeholder prevents Swiper from initializing during prerendering.
+        <div className="relative bg-[#F1EEE5]">
+          <div className="mx-auto grid min-h-[540px] max-w-[1200px] items-center gap-12 px-6 py-16 md:grid-cols-2 lg:px-8 lg:py-20">
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#254C3B]/15 bg-white/70 px-4 py-2">
+                <Sparkles size={14} className="text-[#C69A56]" />
+                <span className="text-[10px] font-bold tracking-[2px] text-[#254C3B]">
+                  {slides[0].eyebrow}
+                </span>
               </div>
 
-              {/* Book Illustration */}
-              <div className="relative flex min-h-[380px] items-center justify-center">
-                <div className="absolute h-72 w-72 rounded-full bg-[#E9EEE8] sm:h-80 sm:w-80 md:h-96 md:w-96" />
+              <h1 className="mt-7 max-w-xl font-serif text-5xl font-semibold leading-[1.12] tracking-tight text-[#20291F] sm:text-6xl lg:text-[68px]">
+                {slides[0].title}
+              </h1>
 
-                <div className="absolute h-80 w-80 rounded-full border border-[#C69A56]/30 md:h-[430px] md:w-[430px]" />
+              <p className="mt-6 max-w-lg text-sm leading-8 text-[#77796F] md:text-base">
+                {slides[0].description}
+              </p>
 
-                <div className="relative flex h-[340px] w-[245px] -rotate-6 flex-col justify-between rounded-r-xl border-l-[9px] border-[#193A2C] bg-[#254C3B] p-7 text-white shadow-2xl transition-transform duration-700 hover:rotate-0 sm:h-[380px] sm:w-[270px]">
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <Link
+                  href={slides[0].href}
+                  className="inline-flex items-center gap-3 rounded-lg bg-[#254C3B] px-6 py-4 text-sm font-semibold text-white"
+                >
+                  {slides[0].buttonText}
+                  <ArrowRight size={17} />
+                </Link>
+
+                <Link
+                  href="/about"
+                  className="text-sm font-semibold text-[#254C3B]"
+                >
+                  Learn More
+                </Link>
+              </div>
+
+              <p className="mt-12 text-xs font-semibold tracking-[3px] text-[#A27A3F]">
+                BOOKNOOK COLLECTION
+              </p>
+            </div>
+
+            <div className="relative mx-auto flex w-full max-w-md items-center justify-center py-8">
+              <div className="absolute size-[280px] rounded-full bg-white/60 blur-3xl md:size-[370px]" />
+
+              <div className="relative flex w-full max-w-[330px] items-center justify-center">
+                <div className="absolute right-2 top-4 h-[330px] w-[190px] rotate-[12deg] rounded-r-lg bg-[#C69A56] shadow-xl md:right-5">
+                  <div className="absolute inset-y-0 left-0 w-3 bg-black/10" />
+                </div>
+
+                <div className="relative z-10 flex h-[360px] w-[230px] -rotate-3 flex-col justify-between overflow-hidden rounded-r-lg bg-[#254C3B] p-7 text-[#FAF8F3] shadow-2xl md:h-[390px] md:w-[260px]">
+                  <div className="flex items-center justify-between">
+                    <BookOpen size={22} />
+                    <span className="text-[9px] tracking-[3px]">
+                      EST. BOOKNOOK
+                    </span>
+                  </div>
+
                   <div>
-                    <BookOpen size={32} className="text-[#D8B77C]" />
+                    <span className="text-[10px] font-semibold tracking-[4px] text-[#D7B477]">
+                      THE READING JOURNEY
+                    </span>
 
-                    <h2 className="mt-12 font-heading text-3xl leading-tight font-bold sm:text-4xl">
-                      {slide.coverTitle}
+                    <h2 className="mt-5 font-serif text-5xl leading-[1.12] md:text-6xl">
+                      Stories
+                      <br />
+                      that
+                      <br />
+                      <i className="text-[#D7B477]">inspire.</i>
                     </h2>
 
-                    <p className="mt-5 text-xs tracking-[0.25em] text-[#D8B77C]">
-                      BOOKNOOK EDITION
+                    <div className="mt-7 h-px w-16 bg-[#D7B477]" />
+
+                    <p className="mt-5 text-[9px] tracking-[3px] text-[#E0E6DF]">
+                      DISCOVER · READ · GROW
                     </p>
                   </div>
 
                   <div className="flex items-end justify-between">
-                    <span className="text-[10px] tracking-widest text-white/70">
-                      DISCOVER · READ · GROW
+                    <span className="text-[9px] tracking-[2px]">
+                      BOOKNOOK LIBRARY
                     </span>
-
-                    <span className="font-heading text-3xl font-light text-[#D8B77C]">
-                      {slide.number}
-                    </span>
+                    <BookOpen size={23} />
                   </div>
                 </div>
 
-                <div className="absolute right-0 bottom-5 rounded-lg border border-[#E9E5DB] bg-white px-5 py-4 shadow-lg sm:right-5">
-                  <p className="text-xs text-[#77796F]">
-                    A better reading life
+                <div className="absolute -bottom-2 -left-5 z-20 rounded-xl border border-[#E9E5DB] bg-white px-5 py-4 shadow-lg sm:-left-10">
+                  <p className="text-xs font-bold text-[#254C3B]">
+                    Your next chapter
                   </p>
-
-                  <p className="mt-1 font-heading text-lg font-bold text-[#254C3B]">
-                    Starts with a book.
+                  <p className="mt-1 text-[10px] text-[#77796F]">
+                    Starts right here.
                   </p>
                 </div>
-
-                <div className="absolute top-8 right-8 h-4 w-4 rounded-full bg-[#C69A56] sm:right-12" />
               </div>
             </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          </div>
+        </div>
+      ) : (
+        <Swiper
+          modules={[Autoplay, Pagination, Navigation]}
+          slidesPerView={1}
+          loop={true}
+          speed={700}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: false,
+            waitForTransition: true,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          navigation
+          className="booknook-hero-swiper"
+        >
+          {slides.map((slide) => {
+            const SlideIcon = slide.icon;
+
+            return (
+              <SwiperSlide key={slide.number}>
+                <div className={`relative ${slide.background}`}>
+                  <div className="mx-auto grid min-h-[540px] max-w-[1200px] items-center gap-12 px-6 py-16 md:grid-cols-2 lg:px-8 lg:py-20">
+                    {/* Hero Text Content */}
+                    <div className="relative z-10">
+                      <div className="inline-flex items-center gap-2 rounded-full border border-[#254C3B]/15 bg-white/70 px-4 py-2">
+                        <Sparkles size={14} className="text-[#C69A56]" />
+
+                        <span className="text-[10px] font-bold tracking-[2px] text-[#254C3B]">
+                          {slide.eyebrow}
+                        </span>
+                      </div>
+
+                      <h1 className="mt-7 max-w-xl font-serif text-5xl font-semibold leading-[1.12] tracking-tight text-[#20291F] sm:text-6xl lg:text-[68px]">
+                        {slide.title}
+                      </h1>
+
+                      <p className="mt-6 max-w-lg text-sm leading-8 text-[#77796F] md:text-base">
+                        {slide.description}
+                      </p>
+
+                      <div className="mt-9 flex flex-wrap items-center gap-4">
+                        <Link
+                          href={slide.href}
+                          className="inline-flex items-center gap-3 rounded-lg bg-[#254C3B] px-6 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-1 hover:bg-[#193A2C]"
+                        >
+                          {slide.buttonText}
+                          <ArrowRight size={17} />
+                        </Link>
+
+                        <Link
+                          href="/about"
+                          className="text-sm font-semibold text-[#254C3B] transition-colors hover:text-[#C69A56]"
+                        >
+                          Learn More
+                        </Link>
+                      </div>
+
+                      <p className="mt-12 text-xs font-semibold tracking-[3px] text-[#A27A3F]">
+                        BOOKNOOK COLLECTION
+                      </p>
+                    </div>
+
+                    {/* Decorative Book Illustration */}
+                    <div className="relative mx-auto flex w-full max-w-md items-center justify-center py-8">
+                      <div className="absolute size-[280px] rounded-full bg-white/60 blur-3xl md:size-[370px]" />
+
+                      <div className="relative flex w-full max-w-[330px] items-center justify-center">
+                        {/* Background Book */}
+                        <div className="absolute right-2 top-4 h-[330px] w-[190px] rotate-[12deg] rounded-r-lg bg-[#C69A56] shadow-xl md:right-5">
+                          <div className="absolute inset-y-0 left-0 w-3 bg-black/10" />
+                        </div>
+
+                        {/* Main Book */}
+                        <div className="relative z-10 flex h-[360px] w-[230px] -rotate-3 flex-col justify-between overflow-hidden rounded-r-lg bg-[#254C3B] p-7 text-[#FAF8F3] shadow-2xl md:h-[390px] md:w-[260px]">
+                          <div className="flex items-center justify-between">
+                            <BookOpen size={22} />
+                            <span className="text-[9px] tracking-[3px]">
+                              EST. BOOKNOOK
+                            </span>
+                          </div>
+
+                          <div>
+                            <span className="text-[10px] font-semibold tracking-[4px] text-[#D7B477]">
+                              THE READING JOURNEY
+                            </span>
+
+                            <h2 className="mt-5 font-serif text-5xl leading-[1.12] md:text-6xl">
+                              Stories
+                              <br />
+                              that
+                              <br />
+                              <i className="text-[#D7B477]">inspire.</i>
+                            </h2>
+
+                            <div className="mt-7 h-px w-16 bg-[#D7B477]" />
+
+                            <p className="mt-5 text-[9px] tracking-[3px] text-[#E0E6DF]">
+                              DISCOVER · READ · GROW
+                            </p>
+                          </div>
+
+                          <div className="flex items-end justify-between">
+                            <span className="text-[9px] tracking-[2px]">
+                              BOOKNOOK LIBRARY
+                            </span>
+                            <SlideIcon size={23} />
+                          </div>
+                        </div>
+
+                        {/* Floating Label */}
+                        <div className="absolute -bottom-2 -left-5 z-20 rounded-xl border border-[#E9E5DB] bg-white px-5 py-4 shadow-lg sm:-left-10">
+                          <p className="text-xs font-bold text-[#254C3B]">
+                            Your next chapter
+                          </p>
+
+                          <p className="mt-1 text-[10px] text-[#77796F]">
+                            Starts right here.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      )}
     </section>
   );
 }
