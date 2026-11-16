@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
 
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 
-// Website metadata for browser tabs and search engines
 export const metadata: Metadata = {
-  title: {
-    default: "BookNook | Discover Your Next Favorite Book",
-    template: "%s | BookNook",
-  },
+  title: "BookNook | Discover Your Next Favorite Book",
   description:
-    "Discover new stories, explore books and enjoy a better reading experience with BookNook.",
+    "Explore books, discover new authors, and build your personal reading library with BookNook.",
 };
 
 export default function RootLayout({
@@ -23,13 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Shared navigation across all pages */}
         <Navbar />
-
-        {/* Current page content */}
-        <main>{children}</main>
-
-        {/* Shared footer across all pages */}
+        {children}
         <Footer />
       </body>
     </html>
