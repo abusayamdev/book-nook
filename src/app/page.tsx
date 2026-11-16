@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock3, Library, Sparkles } from "lucide-react";
+import { Suspense } from "react";
+import { ArrowRight, BookOpen, Clock3, Library } from "lucide-react";
 
 import HeroSlider from "@/components/home/hero-slider";
 import SectionHeading from "@/components/home/section-heading";
+import NewArrivals from "@/components/home/new-arrivals";
 
 // Book categories displayed on the homepage
 const categories = [
@@ -38,43 +40,7 @@ const categories = [
   },
 ];
 
-// Temporary books for the homepage design
-// These will later come from the backend API
-const featuredBooks = [
-  {
-    id: "book-01",
-    title: "The Art of Reading",
-    author: "David Green",
-    category: "Personal Growth",
-    color: "bg-[#254C3B]",
-    coverText: "The Art\nof Reading",
-  },
-  {
-    id: "book-02",
-    title: "Beyond the Horizon",
-    author: "James Wilson",
-    category: "Fiction",
-    color: "bg-[#755044]",
-    coverText: "Beyond\nthe Horizon",
-  },
-  {
-    id: "book-03",
-    title: "A World of Ideas",
-    author: "Sarah Miller",
-    category: "Science",
-    color: "bg-[#435C75]",
-    coverText: "A World\nof Ideas",
-  },
-  {
-    id: "book-04",
-    title: "The Silent Journey",
-    author: "Michael Brown",
-    category: "Biography",
-    color: "bg-[#8A7047]",
-    coverText: "The Silent\nJourney",
-  },
-];
-
+// Steps explaining how BookNook works
 const readingSteps = [
   {
     number: "01",
@@ -153,78 +119,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Books */}
-      <section className="bg-[#FAF8F3] py-20 md:py-24">
-        <div className="mx-auto max-w-[1200px] px-5 lg:px-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading
-              eyebrow="Handpicked collection"
-              title="Featured Books"
-              description="A small selection of books to inspire your next reading journey."
-            />
+      {/* Dynamic New Arrivals from MongoDB */}
+      <Suspense
+        fallback={
+          <section className="bg-[#FAF8F3] px-6 py-20 lg:px-8">
+            <div className="mx-auto max-w-[1200px]">
+              <div className="mb-10">
+                <div className="h-3 w-40 animate-pulse rounded bg-[#E9E5DB]" />
+                <div className="mt-4 h-10 w-64 animate-pulse rounded bg-[#E9E5DB]" />
+                <div className="mt-4 h-4 w-80 animate-pulse rounded bg-[#E9E5DB]" />
+              </div>
 
-            <Link
-              href="/books"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#254C3B] transition-colors hover:text-[#A27A3F]"
-            >
-              View All Books
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-
-          <div className="mt-12 grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4 md:gap-7">
-            {featuredBooks.map((book) => (
-              <article key={book.id} className="group">
-                {/* Decorative Book Cover */}
-                <Link
-                  href={`/books/${book.id}`}
-                  aria-label={`View ${book.title}`}
-                  className="block overflow-hidden rounded-xl border border-[#E9E5DB] bg-white p-5"
-                >
+              <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+                {Array.from({ length: 6 }).map((_, index) => (
                   <div
-                    className={`relative mx-auto flex aspect-[3/4] w-full max-w-[210px] flex-col justify-between overflow-hidden rounded-r-lg p-5 text-white shadow-lg transition-transform duration-300 group-hover:-translate-y-2 ${book.color}`}
+                    key={index}
+                    className="overflow-hidden rounded-xl border border-[#E9E5DB] bg-white p-4"
                   >
-                    <BookOpen size={19} />
-
-                    <div>
-                      <div className="mb-4 h-px w-10 bg-[#D7B477]" />
-
-                      <h3 className="whitespace-pre-line font-serif text-2xl leading-tight sm:text-3xl">
-                        {book.coverText}
-                      </h3>
-
-                      <p className="mt-5 text-[9px] tracking-[2px] text-white/70">
-                        BOOKNOOK EDITION
-                      </p>
-                    </div>
-
-                    <div className="flex justify-end">
-                      <Sparkles size={17} className="text-[#D7B477]" />
-                    </div>
+                    <div className="h-[280px] animate-pulse rounded-lg bg-[#F1EEE5]" />
+                    <div className="mt-5 h-3 w-24 animate-pulse rounded bg-[#E9E5DB]" />
+                    <div className="mt-3 h-6 w-3/4 animate-pulse rounded bg-[#E9E5DB]" />
+                    <div className="mt-3 h-4 w-full animate-pulse rounded bg-[#E9E5DB]" />
                   </div>
-                </Link>
-
-                {/* Book Information */}
-                <div className="mt-4">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#A27A3F]">
-                    {book.category}
-                  </p>
-
-                  <Link href={`/books/${book.id}`}>
-                    <h3 className="mt-2 font-semibold text-[#20291F] transition-colors group-hover:text-[#254C3B]">
-                      {book.title}
-                    </h3>
-                  </Link>
-
-                  <p className="mt-1 text-xs text-[#77796F]">
-                    by {book.author}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+                ))}
+              </div>
+            </div>
+          </section>
+        }
+      >
+        <NewArrivals />
+      </Suspense>
 
       {/* How BookNook Works */}
       <section className="bg-white py-20 md:py-24">
@@ -244,6 +168,7 @@ export default function HomePage() {
                 <div key={step.number} className="text-center">
                   <div className="relative mx-auto flex size-16 items-center justify-center rounded-2xl bg-[#E9EEE8] text-[#254C3B]">
                     <Icon size={26} strokeWidth={1.7} />
+
                     <span className="absolute -right-2 -top-2 flex size-7 items-center justify-center rounded-full bg-[#254C3B] text-[10px] font-bold text-white">
                       {step.number}
                     </span>
