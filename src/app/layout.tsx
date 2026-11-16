@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+
 import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
 
 // Website metadata for browser tabs and search engines
 export const metadata: Metadata = {
@@ -21,11 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Shared navigation across all public pages */}
+        {/* Shared navigation across all pages */}
         <Navbar />
 
         {/* Current page content */}
-        {children}
+        <main>{children}</main>
+
+        {/* Shared footer across all pages */}
+        <Footer />
       </body>
     </html>
   );
